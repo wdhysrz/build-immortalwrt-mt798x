@@ -190,8 +190,14 @@ ${outdir}/${initramfsnm}.itb
 ## create release outputs
 echo -e "\ncreate final outputs..."
 cd ${rootpath} && mkdir -p release && cd release
+
+# 把 sysupgrade 挪到当前 release 目录
 mv ${outdir}/*-${model}-squashfs-sysupgrade.itb ./${firmwarenm}.itb
-mv ${outdir}/${initramfsnm}.itb .
+
+# 把 factory 也挪到当前 release 目录（关键修正！）
+mv ${outdir}/*-${model}-factory.ubi ./${firmwarenm}-factory.ubi
+
+mv ${outdir}/${initramfsnm}.itb ./${initramfsnm}.itb
 
 gzip -1f ${firmwarenm}.itb
 gzip -1f ${initramfsnm}.itb
